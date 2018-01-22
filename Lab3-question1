@@ -1,0 +1,144 @@
+#include <iostream>
+using namespace std;
+struct node{
+	int data;
+	node*next;
+	node*prev;
+};
+class list{
+	node*head;
+	node*tail;
+	public:
+		list(){
+			head = NULL;
+			tail = NULL;
+		}
+		void insert(int value){
+			node*temp = new node;
+			temp->data = value;
+			if(head==NULL){
+				head = temp;
+				tail = temp;
+				temp->next = NULL;
+				temp->prev = NULL;
+			}
+			else
+			{
+				tail->next = temp;
+				temp->prev = tail;
+				temp->next = NULL;
+				tail = temp;
+			}
+		}
+		void insertAt(int value,int pos){
+			node*temp = new node;
+			temp->data = value;
+			int i = 0;
+			node*curr = new node;
+			node*pre = new node;
+			curr = head;
+			while(i<pos){
+				pre = curr;
+				curr=curr->next;
+				i++;
+				if(curr == NULL)
+				{
+					cout<<"Position does not exist\n";
+					break;
+				}
+			}
+			pre->next = temp;
+			temp->next = curr;
+			temp->prev = pre;
+			curr->prev = temp;
+		}
+		void Delete(){
+			node*temp = new node;
+			temp = tail;
+			tail = tail->prev;
+			delete temp;
+			tail->next = NULL;
+		}
+		void DeleteAt(int pos){
+			node*pre = new node;
+			node*curr = new node;
+			node*temp = new node;
+			curr = head;
+			int i = 0;
+			while(i<pos){
+				pre = curr;
+				curr = curr->next;
+				i++;
+			}
+			temp = curr->next;
+			pre->next = temp;
+			delete curr;
+			temp->prev = pre;
+			
+		}
+		void countItems(){
+			node*temp = new node;
+			temp = head;
+			int i = 0;
+			while(temp->next!=NULL){
+				i++;
+				temp = temp->next;
+				
+			}
+			cout<<"Number of items is = "<<i<<endl;
+		}
+		void display(){
+			node*temp = new node;
+			temp = head;
+			while(temp->next!=NULL){
+				cout<<temp<<"->";
+				temp = temp->next;
+			}
+		}
+};
+int main(){
+	list ob;
+	int in,cond = 0;
+	while(cond = 0){
+		cout<<"Enter 1 to add node, enter 2 to insert node at position, enter 3 to delete node, enter 4 to delete node at position, enter 5 to count items in list, enter 6 to display items in list,enter 7 to exit\n";
+		cin>>in;
+		switch(in){
+			case 1: 
+			int val = 0;
+			cout<<"Enter value of node\n";
+			cin>>val;
+			ob.insert(val);
+			break;
+			case 2:
+				int va = 0;
+				cout<<"Enter value\n";
+				cin>>va;
+				int p = 0;
+				cout<<"Enter position\n";
+				cin>>p;
+				ob.insertAt(va,p);
+				break;
+				case 3:
+					ob.Delete();
+					break;
+					case 4:
+						int po= 0;
+						cout<<"Enter position\n";
+						cin>>po;
+						ob.DeleteAt(po);
+						break;
+						case 5:
+							ob.countItems();
+							break;
+							case 6:
+								ob.display();
+								break;
+								case 7;
+								i = 1;
+								break;
+								default:
+									cout<<"Invalid entry\n";
+									
+		}
+	}
+}
